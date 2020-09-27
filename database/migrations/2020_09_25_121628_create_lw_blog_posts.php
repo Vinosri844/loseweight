@@ -16,8 +16,10 @@ class CreateLwBlogPosts extends Migration
         Schema::create('lw_blog_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',255)->nullable();
+            $table->string('name_ar',255)->nullable();
             $table->string('slug',300)->nullable();
             $table->text('content')->nullable();
+            $table->text('content_ar')->nullable();
 			$table->string('image',255)->nullable();
 			$table->string('meta_title',255)->nullable();
 			$table->string('meta_keywords',255)->nullable();

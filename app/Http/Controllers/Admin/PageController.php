@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Pages as Pages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\CommonHelper;
+use CommonLib, CommonHelper, Image, File,  Validator;
  class PageController extends Controller
 {
     public function __construct()
@@ -77,16 +79,41 @@ use Illuminate\Support\Facades\DB;
 // $input['image'] = "$profileImage";
 // }
 
-if($file = $request->hasFile('image')) {
+// if($file = $request->hasFile('image')) {
             
-            $file = $request->$input['image'] ;
+            // $file = $request->$input['image'] ;
             
-            $fileName = $file->getClientOriginalName() ;
-            $destinationPath = public_path().'public/images/admin/eximage' ;
-            $file->move($destinationPath,$fileName);
-            $input->image = $fileName ;
+            // $fileName = $file->getClientOriginalName() ;
+            // $destinationPath = public_path().'public/images/admin/eximage' ;
+            // $file->move($destinationPath,$fileName);
+            // $input->image = $fileName ;
 
-		 }
+		 // }
+		 // $input['slug'] = \Illuminate\Support\Str::slug($input['name'], "-");
+		 if($request->hasFile('image')) {
+                    $photo = $request->file('image');
+
+                    if(isset($photo) && !empty($photo) && $photo->isValid()) {
+                        $rules = array('photo' => 'required|mimes:png,jpg,jpeg'); 
+                        $validator = Validator::make(array('photo'=> $photo), $rules);
+                        if($validator->passes()) {
+							
+                            $file_name =$input['slug'].'_'.time().'.'.$photo->getClientOriginalExtension();
+                            $file_path = public_path(('/uploads/pages/').$file_name);
+                             
+                                // Resize Image
+                                $save_photo = Image::make($photo->getRealPath())->resize(250,250)->save($file_path);
+							
+                            $input['image'] = $file_name;
+							
+							// Delete Old File
+                            if(!empty($request->input('old_image'))) {
+                                $old_file_path = public_path(('/uploads/pages/').$request->input('old_image'));
+                                File::Delete($old_file_path);
+                            }
+                        }
+                    }
+                }
 
 
 
@@ -174,6 +201,35 @@ if($file = $request->hasFile('image')) {
         $input = $request->all();
         
 		$input['slug'] = \Illuminate\Support\Str::slug($input['name'], "-");
+		
+		if($request->hasFile('image')) {
+                    $photo = $request->file('image');
+
+                    if(isset($photo) && !empty($photo) && $photo->isValid()) {
+                        $rules = array('photo' => 'required|mimes:png,jpg,jpeg'); 
+                        $validator = Validator::make(array('photo'=> $photo), $rules);
+                        if($validator->passes()) {
+							
+                            $file_name =$input['slug'].'_'.time().'.'.$photo->getClientOriginalExtension();
+                            $file_path = public_path(('/uploads/pages/').$file_name);
+                             // echo $file_path;
+							 // exit;
+                                // Resize Image
+                                $save_photo = Image::make($photo->getRealPath())->resize(250,250)->save($file_path);
+							
+                            $input['image'] = $file_name;
+							// Delete Old File
+                            if(!empty($request->input('old_image'))) {
+                                $old_file_path = public_path(('/uploads/pages/').$request->input('old_image'));
+                                File::Delete($old_file_path);
+                            }
+                        }
+                    }
+                }
+		
+		
+		
+		
 		
 		unset($input['_method']);
 		unset($input['_token']);

@@ -78,7 +78,7 @@
                                                     
 													
 													
-				<td><a href="{{ url('admin/page/edit') }}/{{$page->id}}" class="badge badge-success"><i class="fas fa-pencil-alt">&nbsp;Edit</i></a></a>  &nbsp; <a href="{{ url('admin/page/destroy') }}/{{$page->id}}" class="badge badge-success"><i class="fas fa-trash-alt">&nbsp;Delete</i></a></td>
+				<td><a href="{{ url('admin/page/edit') }}/{{$page->id}}" class="btn btn-dark"><i class="fas fa-pencil-alt">&nbsp;Edit</i></a></a>  &nbsp; <a href="{{ url('admin/page/destroy') }}/{{$page->id}}" class="btn btn-dark"><i class="fas fa-trash-alt">&nbsp;Delete</i></a></td>
 										
 													 @endforeach
                                                 </tr>

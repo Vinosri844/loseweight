@@ -38,9 +38,14 @@
                                                 <div class="col-12 col-md-12 mb-3">
                                                     <label for="validationSample03">Image</label>
 													
-													@if($input['image'])
-<img id="original" src="{{ url('public/image/admin') }}.{{$input['image']}}" height="70" width="70">
-@endif	
+													<div class="col-sm-2">
+                                    @if(isset($input['image']) && !empty($input['image']) && file_exists(public_path(('/uploads/pages/').$input['image'])))
+                                        <img src="{{ asset(('/uploads/pages/').$input['image']) }}" class="img-thumbnail" width="100" height="100" />
+                                    @else
+
+                                        <img src="http://placehold.it/100x100" class="img-thumbnail" width="100" height="100" />
+                                    @endif
+                                </div>
                                                     <input type="file" name="image" class="form-control" id="validationSample03" placeholder="Image" required="" value="<?php echo isset($input['image'])?$input['image']:''?>">
                                                     <div class="invalid-feedback">Please provide a Image.</div>
                                                     <div class="valid-feedback">Looks good!</div>

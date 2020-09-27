@@ -30,6 +30,17 @@ Route::prefix('/admin')->name('admin.')->namespace('App\Http\Controllers\Admin')
 		Route::post('/page/update/{id}', 'PageController@update')->name('pageupdate');
 		Route::get('/page/destroy/{id}', 'PageController@destroy')->name('pagedestroy');
 		Route::get('/dashboard','DashboardController@index')->name('dashboard');
+		Route::resources([
+			'diettypes'=> DietTypesController::class,
+			'programs'=>ProgramsController::class,
+			'settings'=>SettingsController::class,
+			'mealplans'=>MealPlansController::class,
+			'discounts'=>DiscountsController::class,
+			'banners'=>BannersController::class,
+			'categories'=>CategoriesController::class,
+			'products'=>ProductsController::class,
+			'deliveryslot'=>DeliverySlotController::class,
+		]);
 	});
 	Route::namespace('Auth')->group(function(){
         

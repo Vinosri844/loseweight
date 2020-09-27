@@ -16,11 +16,10 @@ class CreateLwBlogCategories extends Migration
         Schema::create('lw_blog_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',255)->nullable();
-            $table->string('arabic_name',255)->nullable();
+            $table->string('name_ar',255)->nullable();
             $table->string('slug',300)->nullable();
-            $table->string('arabic_slug',300)->nullable();
             $table->text('content')->nullable();
-            $table->text('arabic_content')->nullable();
+            $table->text('content_ar')->nullable();
 			$table->unsignedInteger('parent_id')->nullable();
             $table->unsignedInteger('level')->nullable();
 			$table->string('image',255)->nullable();
